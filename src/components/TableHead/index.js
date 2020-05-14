@@ -7,14 +7,11 @@ function TableHead(props) {
             <tr>
                 <th>
                     ID
-                    <Button name="id" onClick={props.handleSort}>
-                        Sort
-                    </Button>
                 </th>
                 <th>
                     Profile Picture
                 </th>
-                <th>
+                <th className="flex">
                     First Name
                     <Button name="firstName" onClick={props.handleSort}>
                         Sort

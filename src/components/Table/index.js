@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
+import SearchField from "../SearchField"
 import Table from "react-bootstrap/Table";
 import TableHead from "../TableHead";
 import TableRow from "../TableRow";
@@ -8,12 +9,13 @@ import Sort from "../../util/sortFunctions.js"
 
 function EmployeeTable() {
     const [tableState, setTableState] = useState([]);
+    const [searchState, setSearchState] = useState("");
     const [sortState, setSortState] = useState({
-        firstNameSorted: false,
-        lastNameSorted: false
+        isFirstNameSorted: false,
+        isLastNameSorted: false,
+        isEmailSorted: false,
+        isUsernameSorted: false
     });
-    
-
     
 
     useEffect(() => {
@@ -28,46 +30,85 @@ function EmployeeTable() {
         let buttonName = event.target.name
     
         switch (buttonName) {
-            // case "id":
-            //     sortByID(sortedTable);
-            //     break;
-
             case "firstName":
-                Sort.byFirstName(sortedTable, sortState.firstNameSorted);
+                Sort.byFirstName(sortedTable, sortState.isFirstNameSorted);
                 setSortState({
-                    firstNameSorted: !sortState.firstNameSorted,
-                    lastNameSorted: false
+                    isFirstNameSorted: !sortState.isFirstNameSorted,
+                    isLastNameSorted: false,
+                    isEmailSorted: false,
+                    isUsernameSorted: false
                 })
+                console.log(tableState)
+
                 break;
 
             case "lastName":
-                Sort.byLastName(sortedTable, sortState.lastNameSorted);
+                Sort.byLastName(sortedTable, sortState.isLastNameSorted);
                 setSortState({
-                    firstNameSorted: false,
-                    lastNameSorted: !sortState.lastNameSorted
+                    isFirstNameSorted: false,
+                    isLastNameSorted: !sortState.isLastNameSorted,
+                    isEmailSorted: false,
+                    isUsernameSorted: false
                 })
+
                 break;
 
-            // case "email":
-            //     sortByEmail(sortedTable);
-            //     break;
+            case "email":
+                Sort.byEmail(sortedTable, sortState.isEmailSorted);
+                setSortState({
+                    isFirstNameSorted: false,
+                    isLastNameSorted: false,
+                    isEmailSorted: !sortState.isEmailSorted,
+                    isUsernameSorted: false
+                })
 
-            // case "username":
-            //     sortByUsername(sortedTable);
-            //     break;
+                break;
+
+            case "username":
+                Sort.byUsername(sortedTable, sortState.isUsernameSorted);
+                setSortState({
+                    isFirstNameSorted: false,
+                    isLastNameSorted: false,
+                    isEmailSorted: false,
+                    isUsernameSorted: !sortState.isUsernameSorted
+                })
+                
+                break;
         }
 
         setTableState([...sortedTable]);
     }
 
+    const handleSearchInput = (event) => {
+        setSearchState(event.target.value.toLowerCase())
+        console.log(searchState)
+
+        if (searchState === "") {
+            console.log("do nothing")
+        } else {
+            console.log("something")
+        }
+    }
+
     return (
         <Container>
+            <SearchField handleSearchInput={handleSearchInput} />
             <Table striped bordered hover>
-                <TableHead handleSort={handleSort} onClick={e => alert("asdf")}/>
+                <TableHead handleSort={handleSort} />
                 <tbody>
-                    {tableState.map((item, index) => (
+                    {searchState
+                    ? tableState.filter(item => 
+                        item.name.first.toLowerCase().includes(searchState)
+                        || item.name.last.toLowerCase().includes(searchState)
+                        || item.email.toLowerCase().includes(searchState)
+                        || item.login.username.toLowerCase().includes(searchState))
+                        .map((item, index) => (
+                            <TableRow id={index+1} firstName={item.name.first} lastName={item.name.last} username={item.login.username} email={item.email} picture={item.picture.thumbnail} />
+                        ))
+                    : tableState.map((item, index) => (
                         <TableRow id={index+1} firstName={item.name.first} lastName={item.name.last} username={item.login.username} email={item.email} picture={item.picture.thumbnail} />
-                    ))}
+                        ))
+                    }
                 </tbody>
             </Table>
         </Container>

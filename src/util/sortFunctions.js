@@ -20,7 +20,6 @@ const Sort = {
                 }
             })
         }
-
     },
 
     byLastName: function(arr, bool) {
@@ -43,7 +42,51 @@ const Sort = {
                 }
             })
         }   
-    }
+    },
+
+    byEmail: function(arr, bool) {
+        if (bool) {
+            arr.sort((a, b) => {
+                if (a.email < b.email) {
+                    return 1;
+                }
+                else {
+                    return -1
+                }
+            })
+        } else {
+            arr.sort((a, b) => {
+                if (a.email > b.email) {
+                    return 1;
+                }
+                else {
+                    return -1
+                }
+            })
+        }
+    },
+
+    byUsername: function(arr, bool) {
+        if (bool) {
+            arr.sort((a, b) => {
+                if (a.login.username < b.login.username) {
+                    return 1;
+                }
+                else {
+                    return -1
+                }
+            })
+        } else {
+            arr.sort((a, b) => {
+                if (a.login.username > b.login.username) {
+                    return 1;
+                }
+                else {
+                    return -1
+                }
+            })
+        }
+    },
 }
 
 export default Sort;
