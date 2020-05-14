@@ -4,9 +4,17 @@ import Table from "react-bootstrap/Table";
 import TableHead from "../TableHead";
 import TableRow from "../TableRow";
 import API from "../../util/api.js";
+import Sort from "../../util/sortFunctions.js"
 
 function EmployeeTable() {
     const [tableState, setTableState] = useState([]);
+    const [sortState, setSortState] = useState({
+        firstNameSorted: false,
+        lastNameSorted: false
+    });
+    
+
+    
 
     useEffect(() => {
         API.getAllEmployees()
@@ -15,20 +23,41 @@ function EmployeeTable() {
             })
     }, []);
 
-    const handleSort = () => {
+    const handleSort = (event) => {
         let sortedTable = tableState;
-        
-        sortedTable.sort((a, b) => {
-            if (a.name.first > b.name.first) {
-                return 1;
-            }
-            else {
-                return -1
-            }
-        })
+        let buttonName = event.target.name
+    
+        switch (buttonName) {
+            // case "id":
+            //     sortByID(sortedTable);
+            //     break;
 
-        setTableState(...sortedTable);
-        console.log(tableState)
+            case "firstName":
+                Sort.byFirstName(sortedTable, sortState.firstNameSorted);
+                setSortState({
+                    firstNameSorted: !sortState.firstNameSorted,
+                    lastNameSorted: false
+                })
+                break;
+
+            case "lastName":
+                Sort.byLastName(sortedTable, sortState.lastNameSorted);
+                setSortState({
+                    firstNameSorted: false,
+                    lastNameSorted: !sortState.lastNameSorted
+                })
+                break;
+
+            // case "email":
+            //     sortByEmail(sortedTable);
+            //     break;
+
+            // case "username":
+            //     sortByUsername(sortedTable);
+            //     break;
+        }
+
+        setTableState([...sortedTable]);
     }
 
     return (
