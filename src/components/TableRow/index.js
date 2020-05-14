@@ -5,10 +5,13 @@ function TableRow(props) {
 
             <tr>
                 <td>{props.id}</td>
-                <td>{props.name}</td>
-                <td>{props.username}</td>
+                <td>
+                    <img src={props.picture} />
+                </td>
+                <td>{props.firstName}</td>
+                <td>{props.lastName}</td>
                 <td>{props.email}</td>
-                <td>{props.phone}</td>
+                <td>{props.username}</td>
             </tr>
     );
 }

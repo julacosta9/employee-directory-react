@@ -6,26 +6,38 @@ import TableRow from "../TableRow";
 import API from "../../util/api.js";
 
 function EmployeeTable() {
-    let tableRows;
     const [tableState, setTableState] = useState([]);
-    console.log("setupInit: ", tableState);
 
     useEffect(() => {
         API.getAllEmployees()
             .then((res) => {
-                console.log("Employee Data", res.data);
-                setTableState(res.data);
-                return res.data;
+                setTableState(res.data.results);
             })
     }, []);
+
+    const handleSort = () => {
+        let sortedTable = tableState;
+        
+        sortedTable.sort((a, b) => {
+            if (a.name.first > b.name.first) {
+                return 1;
+            }
+            else {
+                return -1
+            }
+        })
+
+        setTableState(...sortedTable);
+        console.log(tableState)
+    }
 
     return (
         <Container>
             <Table striped bordered hover>
-                <TableHead />
+                <TableHead handleSort={handleSort} onClick={e => alert("asdf")}/>
                 <tbody>
-                    {tableState.map((item) => (
-                        <TableRow id={item.id} name={item.name} username={item.username} email={item.email} phone={item.phone} />
+                    {tableState.map((item, index) => (
+                        <TableRow id={index+1} firstName={item.name.first} lastName={item.name.last} username={item.login.username} email={item.email} picture={item.picture.thumbnail} />
                     ))}
                 </tbody>
             </Table>
