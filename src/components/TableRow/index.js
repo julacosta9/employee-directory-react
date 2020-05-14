@@ -6,7 +6,10 @@ function TableRow(props) {
             <tr>
                 <td>{props.id}</td>
                 <td>
-                    <img src={props.picture} />
+                    <img
+                        src={props.picture}
+                        alt={`Headshot of ${props.firstName} ${props.lastName}`}
+                    />
                 </td>
                 <td>{props.firstName}</td>
                 <td>{props.lastName}</td>

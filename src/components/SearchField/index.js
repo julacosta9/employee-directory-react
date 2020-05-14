@@ -1,7 +1,16 @@
-import React from "react"
+import React from "react";
+import Form from "react-bootstrap/Form"
 
-function SearchField (props) {
-    return <input onChange={props.handleSearchInput} />
+function SearchField(props) {
+    return (
+        <Form.Group>
+            <Form.Control
+                onChange={props.handleSearchInput}
+                type="text"
+                placeholder="Search..."
+            />
+        </Form.Group>
+    );
 }
 
-export default SearchField
+export default SearchField;

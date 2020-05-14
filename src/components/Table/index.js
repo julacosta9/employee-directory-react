@@ -16,7 +16,6 @@ function EmployeeTable() {
         isEmailSorted: false,
         isUsernameSorted: false
     });
-    
 
     useEffect(() => {
         API.getAllEmployees()
@@ -38,8 +37,6 @@ function EmployeeTable() {
                     isEmailSorted: false,
                     isUsernameSorted: false
                 })
-                console.log(tableState)
-
                 break;
 
             case "lastName":
@@ -50,7 +47,6 @@ function EmployeeTable() {
                     isEmailSorted: false,
                     isUsernameSorted: false
                 })
-
                 break;
 
             case "email":
@@ -61,7 +57,6 @@ function EmployeeTable() {
                     isEmailSorted: !sortState.isEmailSorted,
                     isUsernameSorted: false
                 })
-
                 break;
 
             case "username":
@@ -71,8 +66,11 @@ function EmployeeTable() {
                     isLastNameSorted: false,
                     isEmailSorted: false,
                     isUsernameSorted: !sortState.isUsernameSorted
-                })
-                
+                })    
+                break;
+
+            default:
+                console.log(`The following button name was not found: ${buttonName}`)
                 break;
         }
 
@@ -81,13 +79,6 @@ function EmployeeTable() {
 
     const handleSearchInput = (event) => {
         setSearchState(event.target.value.toLowerCase())
-        console.log(searchState)
-
-        if (searchState === "") {
-            console.log("do nothing")
-        } else {
-            console.log("something")
-        }
     }
 
     return (
