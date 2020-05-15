@@ -27,6 +27,7 @@ function EmployeeTable() {
     const handleSort = (event) => {
         let sortedTable = tableState;
         let buttonName = event.target.name
+        console.log(event)
     
         switch (buttonName) {
             case "firstName":
